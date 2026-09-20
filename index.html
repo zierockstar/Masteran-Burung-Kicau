@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masteran Kicau Mewah Pro - Komplit</title>
+    <style>
+        :root {
+            --primary: #1b4332;
+            --primary-dark: #081c15;
+            --accent: #d4a373;
+            --bg-color: #f4f9f4;
+            --card-bg: #ffffff;
+            --text-main: #2b2d42;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background: #fff;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        /* Gaya Foto di Header */
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .header-img-container {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            background: #f0f0f0;
+            flex-shrink: 0;
+        }
+        .header-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .header-text {
+            text-align: left;
+        }
+        header h1 { margin: 0; font-size: 16px; }
+        header p { margin: 3px 0 0 0; font-size: 10px; color: #e9edc9; }
+
+        .content-body {
+            padding: 15px;
+            flex: 1;
+            padding-bottom: 130px;
+        }
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+            border-left: 4px solid var(--accent);
+            padding-left: 8px;
+        }
+        .bird-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .bird-card {
+            background: var(--card-bg);
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s;
+        }
+        .bird-card:active { transform: scale(0.97); }
+        .bird-card.playing {
+            border-color: var(--accent);
+            background: #fefae0;
+        }
+        
+        .bird-img-container {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 8px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            background: #f0f0f0;
+        }
+        .bird-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .bird-name { font-size: 12px; font-weight: bold; margin-bottom: 2px; }
+        .bird-type { font-size: 9px; color: #606c38; background: #faedcd; padding: 2px 5px; border-radius: 4px; display: inline-block; }
+
+        /* Sticky Player */
+        .sticky-player {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            background: #ffffff;
+            border-top: 1px solid #ddd;
+            padding: 12px 15px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 100;
+        }
+        .player-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .player-title { font-weight: bold; font-size: 12px; color: var(--primary-dark); }
+        .player-status { font-size: 10px; color: #bc6c25; font-weight: bold; }
+        .ctrl-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .ctrl-btn.secondary { background: #6c757d; width: 30px; height: 30px; font-size: 11px; }
+        .ctrl-btn.loop-active { background: #bc6c25 !important; }
+        .progress-container { width: 100%; background: #e0e0e0; height: 5px; border-radius: 3px; overflow: hidden; cursor: pointer; }
+        .progress-bar { height: 100%; background: var(--accent); width: 0%; }
+        .time-info { display: flex; justify-content: space-between; font-size: 9px; color: #8d99ae; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <div class="header-content">
+            <div class="header-img-container">
+                <!-- Foto ikon di bagian judul atas -->
+                <img src="https://i.ibb.co.com/tTQ4Lr1p/3742bcbd-dc05-4fb0-92e1-16e4ae30ae93.png?w=150" alt="Logo Header">
+            </div>
+            <div class="header-text">
+                <h1>DF CANARY BIRD</h1>
+                <p>Info APK 👉 082213054013</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-body">
+        <div class="section-title">Daftar Isian & Kombinasi Juara</div>
+        <div class="bird-grid" id="bird-grid"></div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="audio-element" preload="none"></audio>
+
+    <div class="sticky-player">
+        <div class="player-info">
+            <div>
+                <div class="player-title" id="current-title">Pilih burung dulu</div>
+                <div class="player-status" id="current-status">Siap</div>
+            </div>
+            <button class="ctrl-btn secondary loop-active" id="loop-btn" onclick="toggleLoop()" title="Putar Ulang Otomatis">🔁 <span id="loop-txt" style="font-size:8px;">ON</span></button>
+        </div>
+        <div class="progress-container" onclick="seekAudio(event)">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="time-info">
+            <span id="time-current">00:00</span>
+            <span id="time-total">00:00</span>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+            <button class="ctrl-btn secondary" onclick="skipTime(-5)">⏪</button>
+            <button class="ctrl-btn" id="play-pause-btn" onclick="togglePlayPause()">▶</button>
+            <button class="ctrl-btn secondary" onclick="skipTime(5)">⏩</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Daftar 14 audio masteran & kombinasi lengkap
+    const birdList = [
+        { id: 'kenari', name: 'Kenari', type: 'Ngerol Panjang', image: 'https://i.ibb.co.com/B2KY35r0/20260109-230059.png?w=150', url: 'Kenari.mp3' },
+        { id: 'murai', name: 'Murai Batu', type: 'Gong & Isian', image: 'https://i.ibb.co.com/vvm7cqhZ/085ecf117ff31813090a0f059c8d8646.jpg?w=150', url: 'Murai.mp3' },
+        { id: 'cendet', name: 'Cendet', type: 'Membongkar Isian', image: 'https://i.ibb.co.com/MySqy5z5/images-3.jpg?w=150', url: 'Cendet.mp3' },
+        { id: 'ciblek', name: 'Ciblek', type: 'Tembakan Rapat', image: 'https://i.ibb.co.com/wrpWF7Lt/Burung-Ciblek.png?w=150', url: 'Ciblek.mp3' },
+        { id: 'kacer', name: 'Kacer', type: 'Tembakan Kasar', image: 'https://i.ibb.co.com/cShHYgLd/images-4.jpg?w=150', url: 'Kacer.mp3' },
+        { id: 'kapastembak', name: 'Kapas Tembak', type: 'Rapat & Tajam', image: 'https://i.ibb.co.com/3mhdM999/1783755487939066-75323035e7-berita-bengkulu.webp?w=150', url: 'KapasTembak.mp3' },
+        { id: 'cililin', name: 'Cililin', type: 'Tembakan Panjang', image: 'https://i.ibb.co.com/DPnFc14N/images-5.jpg?w=150', url: 'Cililin.mp3' },
+        { id: 'sikatanlondo', name: 'Sikatan Londo', type: 'Vokal Unik', image: 'https://i.ibb.co.com/RXnMv00/c0de2034cdfd23eb4b5a5fef61ef98e2.jpg?w=150', url: 'SikatanLondo.mp3' },
+        { id: 'sogokontong', name: 'Sogok Ontong', type: 'Nekor Kristal', image: 'https://i.ibb.co.com/rK2qkdZK/images-6.jpg?w=150', url: 'SogokOntong.mp3' },
+        { id: 'cucakjenggot', name: 'Cucak Jenggot', type: 'Tembakan Rapat', image: 'https://i.ibb.co.com/s9RdgwxM/Cucak-Jenggot.jpg?w=150', url: 'CucakJenggot.mp3' },
+        { id: 'lovebird', name: 'Lovebird', type: 'Kekean Panjang', image: 'https://i.ibb.co.com/8gX6dXX0/Rosy-faced-Lovebird-Alex-Wang-1024x1024.jpg?w=150', url: 'Lovebird.mp3' },
+        { id: 'suarapikat1', name: 'Pikat Prenjak', type: 'Isian Campur', image: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=150', url: 'Pikat1.mp3' },
+        { id: 'suarapikat2', name: 'Pikat Kutilang Ribut', type: 'Isian Campur', image: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=150', url: 'Pikat2.mp3' },
+        { id: 'suarapikat3', name: 'Pikat Kolibri', type: 'Isian Campur', image: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=150', url: 'Pikat3.mp3' }
+    ];
+
+    let audioElement = document.getElementById('audio-element');
+    let currentBird = null;
+    let isLooping = true;
+
+    function renderGrid() {
+        let container = document.getElementById('bird-grid');
+        let html = '';
+        birdList.forEach(bird => {
+            html += `
+                <div class="bird-card" id="card-${bird.id}" onclick="playBird('${bird.id}')">
+                    <div class="bird-img-container">
+                        <img src="${bird.image}" alt="${bird.name}">
+                    </div>
+                    <div class="bird-name">${bird.name}</div>
+                    <div class="bird-type">${bird.type}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function playBird(birdId) {
+        let bird = birdList.find(b => b.id === birdId);
+        if (!bird) return;
+
+        document.querySelectorAll('.bird-card').forEach(el => el.classList.remove('playing'));
+        document.getElementById('card-' + birdId).classList.add('playing');
+
+        currentBird = bird;
+        document.getElementById('current-title').innerText = bird.name;
+        document.getElementById('current-status').innerText = 'Memuat...';
+
+        audioElement.src = bird.url;
+        audioElement.loop = isLooping;
+        audioElement.play().then(() => {
+            document.getElementById('current-status').innerText = 'Memutar';
+            document.getElementById('play-pause-btn').innerText = '⏸';
+        }).catch(err => {
+            document.getElementById('current-status').innerText = 'File MP3 belum ada di folder!';
+        });
+    }
+
+    audioElement.addEventListener('timeupdate', () => {
+        if (!isNaN(audioElement.duration)) {
+            let pct = (audioElement.currentTime / audioElement.duration) * 100;
+            document.getElementById('progress-bar').style.width = pct + '%';
+            document.getElementById('time-current').innerText = formatTime(audioElement.currentTime);
+            document.getElementById('time-total').innerText = formatTime(audioElement.duration);
+        }
+    });
+
+    function togglePlayPause() {
+        if (!currentBird) {
+            playBird(birdList[0].id);
+            return;
+        }
+        if (audioElement.paused) {
+            audioElement.play();
+            document.getElementById('play-pause-btn').innerText = '⏸';
+            document.getElementById('current-status').innerText = 'Memutar';
+        } else {
+            audioElement.pause();
+            document.getElementById('play-pause-btn').innerText = '▶';
+            document.getElementById('current-status').innerText = 'Dijeda';
+        }
+    }
+
+    function toggleLoop() {
+        isLooping = !isLooping;
+        audioElement.loop = isLooping;
+        let btn = document.getElementById('loop-btn');
+        let txt = document.getElementById('loop-txt');
+        if (isLooping) {
+            btn.classList.add('loop-active');
+            txt.innerText = 'ON';
+        } else {
+            btn.classList.remove('loop-active');
+            txt.innerText = 'OFF';
+        }
+    }
+
+    function skipTime(sec) {
+        if (!isNaN(audioElement.duration)) audioElement.currentTime += sec;
+    }
+
+    function seekAudio(event) {
+        if (!isNaN(audioElement.duration)) {
+            let rect = event.currentTarget.getBoundingClientRect();
+            audioElement.currentTime = ((event.clientX - rect.left) / rect.width) * audioElement.duration;
+        }
+    }
+
+    function formatTime(sec) {
+        let m = Math.floor(sec / 60);
+        let s = Math.floor(sec % 60);
+        return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+    }
+
+    renderGrid();
+</script>
+</body>
+</html>
